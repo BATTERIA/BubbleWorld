@@ -1,7 +1,8 @@
 
 # Bubble World！
 
-A Simple Friends Chatting App.<br>
+#### A Simple Friends Chatting App.<br>
+<br>
 Some easy functions have been completed such as regist,login,add friend,agree add and send messages.<br>
 It's still coding.<br>
 <br>
@@ -14,16 +15,14 @@ It's still coding.<br>
 4.使用安卓原生的Data Binding进行改造<br>
 5.考虑线程安全及优化问题<br>
 <br>
-<br>
-<br>
-### 登录页面login_page
+##### 登录页面login_page
 ![login_page](https://github.com/BATTERIA/BubbleWorld/blob/master/demonstration/login_page.png)
 <br>
-### 添加好友同意添加页面add_friends
+##### 添加好友同意添加页面add_friends
 ![add_friends](https://github.com/BATTERIA/BubbleWorld/blob/master/demonstration/add_friends.png)
 <br>
-### 好友页面friends_page
+##### 好友页面friends_page
 ![friends_page](https://github.com/BATTERIA/BubbleWorld/blob/master/demonstration/friends_page.png)
 <br>
-### 聊天页面chatting_page
+##### 聊天页面chatting_page
 ![chatting_page](https://github.com/BATTERIA/BubbleWorld/blob/master/demonstration/chatting_page.png)
