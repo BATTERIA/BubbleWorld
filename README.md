@@ -1,8 +1,8 @@
 
 # Bubble World！
 
-A Simple Friends Chatting App.
-Some easy functions have been completed such as regist,login,add friend,agree add and send messages.
+A Simple Friends Chatting App.\n
+Some easy functions have been completed such as regist,login,add friend,agree add and send messages./n
 It's still coding.
 
 本实例网络使用了mvp模式架构
