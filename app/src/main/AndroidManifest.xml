@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="batteria.bubbleworld">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".utils.Utils"
+        android:allowBackup="true"
+        android:icon="@drawable/portrait_default"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/portrait_default"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.FriendsListActivity" />
+        <activity android:name=".activity.RegistActivity" />
+        <activity android:name=".activity.AddFriendsActivity" />
+        <activity android:name=".activity.ChattingActivity"></activity>
+    </application>
+
+</manifest>

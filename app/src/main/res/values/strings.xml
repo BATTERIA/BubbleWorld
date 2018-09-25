@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Bubble</string>
+    <string name="friends">Friends</string>
+    <string name="string_default">DEFAULT</string>
+    <string name="pic_desccribe">DEFAULT</string>
+    <string name="logout">logout</string>
+    <string name="login">login</string>
+    <string name="regist">regist</string>
+    <string name="account">account</string>
+    <string name="password">password</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="regist_new_account">regist new account</string>
+    <string name="cancel">cancel</string>
+    <string name="add">add</string>
+    <string name="back">back</string>
+    <string name="type">enter what you want</string>
+
+</resources>

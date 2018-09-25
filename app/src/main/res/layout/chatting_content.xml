@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/right_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/right_chat"
+        android:editable="false"
+        android:maxWidth="200dp"
+        android:text="1"
+        tools:ignore="Deprecated" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/left_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@drawable/left_chat"
+        android:editable="false"
+        android:maxWidth="200dp"
+        android:text="1"
+        tools:ignore="Deprecated" />
+
+</RelativeLayout>
