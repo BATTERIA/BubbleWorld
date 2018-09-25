@@ -1,6 +1,7 @@
 
 # Bubble World！
-A Simple Friends Chatting App
+
+A Simple Friends Chatting App.
 Some easy functions have been completed such as regist,login,add friend,agree add and send messages.
 It's still coding.
 
