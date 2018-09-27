@@ -52,6 +52,8 @@ public class ChattingActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Message> messages;
 
+    private NewMessagesTask newMessagesTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,14 @@ public class ChattingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new NewMessagesTask().execute();
+        newMessagesTask = new NewMessagesTask();
+        newMessagesTask.execute();
+    }
+
+    @Override
+    protected  void onPause() {
+        super.onPause();
+        newMessagesTask.cancel(true);
     }
 
     @OnClick({R.id.back, R.id.message_send})
@@ -100,7 +109,7 @@ public class ChattingActivity extends AppCompatActivity {
     private MessagesView messagesView=new MessagesView() {
         @Override
         public void onSuccess(List<Message> updateMessages) {
-            Log.d(TAG, "onSuccess: MessagesView"+ updateMessages.get(0).getContent());
+            Log.d(TAG, "onSuccess: MessagesView");
             if (updateMessages.get(0).getContent().equals("null")) {
                 Log.d(TAG, "onSuccess: 暂无消息");
 //                Toast.makeText(getApplicationContext(), "暂无消息", Toast.LENGTH_SHORT).show();
@@ -109,12 +118,13 @@ public class ChattingActivity extends AppCompatActivity {
             messages.clear();
             messages.addAll(updateMessages);
             mAdapter.notifyDataSetChanged();
+            mRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
         }
 
         @Override
         public void onError(String result) {
             Log.d(TAG, "onError: connect_error");
-            Toast.makeText(getApplicationContext(), "connect_error", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "connect_error", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -131,7 +141,7 @@ public class ChattingActivity extends AppCompatActivity {
             temp.setReceiverid(fid);
             messages.add(temp);
             mAdapter.notifyDataSetChanged();
-            mRecyclerView.scrollToPosition(0);
+//            mRecyclerView.scrollToPosition(0);
         }
 
         @Override
@@ -146,7 +156,12 @@ public class ChattingActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "doInBackground: ********************************");
+            Log.d(TAG, "doInBackground: " + Thread.currentThread().getName());
+            Log.d(TAG, "doInBackground: ********************************");
             while(true){
+                if(this.isCancelled())
+                    return null;
                 try {
                     Thread.sleep(2000);
                     messagesPresenter.getAllMessages(uid, fid);
