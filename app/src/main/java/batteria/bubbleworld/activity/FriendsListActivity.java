@@ -2,6 +2,7 @@ package batteria.bubbleworld.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -34,6 +35,8 @@ public class FriendsListActivity extends AppCompatActivity {
     TextView logout;
     @BindView(R.id.add)
     TextView add;
+    @BindView(R.id.refresh_tool)
+    SwipeRefreshLayout refreshTool;
     private FriendsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<User> friends;
@@ -61,6 +64,10 @@ public class FriendsListActivity extends AppCompatActivity {
         presenter.onCreate();
         presenter.attachView(friendsView);
         presenter.getAllFriends(Integer.parseInt(sh.read().get("uid")));
+
+        refreshTool.setOnRefreshListener(()->{
+            presenter.getAllFriends(Integer.parseInt(sh.read().get("uid")));
+        });
     }
 
     @Override
@@ -76,20 +83,20 @@ public class FriendsListActivity extends AppCompatActivity {
             case R.id.logout:
                 sh.clear();
                 finish();
-                intent = new Intent(this, LoginActivity.class);
+                intent=new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
             case R.id.add:
-                intent = new Intent(this, AddFriendsActivity.class);
+                intent=new Intent(this, AddFriendsActivity.class);
                 startActivity(intent);
                 break;
         }
     }
 
-    private ItemListener itemListener = new ItemListener() {
+    private ItemListener itemListener=new ItemListener() {
         @Override
         public void onItemClick(int position, User user) {
-            Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+            Intent intent=new Intent(getApplicationContext(), ChattingActivity.class);
             intent.putExtra("fid", user.getUid());
             startActivity(intent);
         }
@@ -99,7 +106,7 @@ public class FriendsListActivity extends AppCompatActivity {
         @Override
         public void onSuccess(List<User> updateFriends) {
             Log.d(TAG, "onSuccess1: FriendsView");
-            if (updateFriends.get(0).getNickname().equals("null")){
+            if (updateFriends.get(0).getNickname().equals("null")) {
                 Toast.makeText(getApplicationContext(), "暂无好友", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -107,6 +114,7 @@ public class FriendsListActivity extends AppCompatActivity {
             friends.addAll(updateFriends);
             mAdapter.notifyDataSetChanged();
             mRecyclerView.scrollToPosition(0);
+            refreshTool.setRefreshing(false);
         }
 
         @Override

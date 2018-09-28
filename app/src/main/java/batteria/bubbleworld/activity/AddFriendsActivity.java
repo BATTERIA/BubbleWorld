@@ -1,7 +1,7 @@
 package batteria.bubbleworld.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -42,6 +42,8 @@ public class AddFriendsActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @BindView(R.id.back)
     TextView back;
+    @BindView(R.id.refresh_tool)
+    SwipeRefreshLayout refreshTool;
 
     private AddFriendsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -77,6 +79,10 @@ public class AddFriendsActivity extends AppCompatActivity {
         addFriendPresenter.attachView(addFriendView);
         agreeAddPresenter.onCreate();
         agreeAddPresenter.attachView(agreeAddView);
+
+        refreshTool.setOnRefreshListener(()->{
+            presenter.getAddingFriends(Integer.parseInt(sh.read().get("uid")));
+        });
     }
 
     @OnClick({R.id.back, R.id.add})
@@ -86,20 +92,20 @@ public class AddFriendsActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.add:
-                String aid = myUid.getText().toString();
-                String fid = uid.getText().toString();
-                Log.d(TAG, "onViewClicked: "+aid +"  "+fid);
-                addFriendPresenter.addFriend(Integer.parseInt(aid),Integer.parseInt(fid));
+                String aid=myUid.getText().toString();
+                String fid=uid.getText().toString();
+                Log.d(TAG, "onViewClicked: " + aid + "  " + fid);
+                addFriendPresenter.addFriend(Integer.parseInt(aid), Integer.parseInt(fid));
                 break;
         }
     }
 
-    private ItemInnerListener itemInnerListener = new ItemInnerListener() {
+    private ItemInnerListener itemInnerListener=new ItemInnerListener() {
         @Override
         public void onItemInnerClick(int position, int uid) {
-            int aid = Integer.parseInt(myUid.getText().toString());
-            int fid = uid;
-            Log.d(TAG, "onItemInnerClick: "+aid+" "+fid);
+            int aid=Integer.parseInt(myUid.getText().toString());
+            int fid=uid;
+            Log.d(TAG, "onItemInnerClick: " + aid + " " + fid);
             agreeAddPresenter.agreeAdd(aid, fid);
             friends.remove(position);
             mAdapter.notifyDataSetChanged();
@@ -111,7 +117,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         @Override
         public void onSuccess(List<User> updateFriends) {
             Log.d(TAG, "onSuccess1: FriendsView");
-            if (updateFriends.get(0).getNickname().equals("null")){
+            if (updateFriends.get(0).getNickname().equals("null")) {
                 Toast.makeText(getApplicationContext(), "暂无好友请求", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -119,6 +125,7 @@ public class AddFriendsActivity extends AppCompatActivity {
             friends.addAll(updateFriends);
             mAdapter.notifyDataSetChanged();
             mRecyclerView.scrollToPosition(0);
+            refreshTool.setRefreshing(false);
         }
 
         @Override
@@ -128,27 +135,27 @@ public class AddFriendsActivity extends AppCompatActivity {
         }
     };
 
-    private UserView addFriendView= new UserView() {
+    private UserView addFriendView=new UserView() {
         @Override
         public void onSuccess(User user) {
-            Toast.makeText(getApplicationContext(),"已发出请求", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "已发出请求", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onError(String result) {
-            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
     };
 
-    private UserView agreeAddView= new UserView() {
+    private UserView agreeAddView=new UserView() {
         @Override
         public void onSuccess(User user) {
-            Toast.makeText(getApplicationContext(),"已添加", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "已添加", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onError(String result) {
-            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
     };
 
